@@ -3,7 +3,7 @@
     "path": "~/Github/Data Wrangling/index.qmd",
     "project_path": "index.qmd",
     "type": "quarto_markdown",
-    "hash": "3011810010",
+    "hash": "660874468",
     "contents": "",
     "dirty": false,
     "created": 1726736756534.0,
@@ -22,11 +22,11 @@
         "docOutlineSize": "99"
     },
     "folds": "",
-    "lastKnownWriteTime": 1726741868,
+    "lastKnownWriteTime": 1726742211,
     "encoding": "UTF-8",
     "collab_server": "",
     "source_window": "",
-    "last_content_update": 1726741868370,
+    "last_content_update": 1726742211502,
     "read_only": false,
     "read_only_alternatives": []
 }
