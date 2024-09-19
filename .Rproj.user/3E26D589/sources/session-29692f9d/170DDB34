@@ -1,0 +1,32 @@
+{
+    "id": "170DDB34",
+    "path": "~/Github/Data Wrangling/index.qmd",
+    "project_path": "index.qmd",
+    "type": "quarto_markdown",
+    "hash": "0",
+    "contents": "",
+    "dirty": true,
+    "created": 1726736756534.0,
+    "source_on_save": false,
+    "relative_order": 1,
+    "properties": {
+        "rmdVisualMode": "true",
+        "rmdVisualWrapConfigured": "true",
+        "source_window_id": "wd23tm18b9g66",
+        "Source": "Source",
+        "docOutlineVisible": "1",
+        "rmdVisualCollapsedChunks": "",
+        "rmdVisualModeLocation": "33:80",
+        "cursorPosition": "586,0",
+        "scrollLine": "0",
+        "docOutlineSize": "99"
+    },
+    "folds": "",
+    "lastKnownWriteTime": 1726740259,
+    "encoding": "UTF-8",
+    "collab_server": "",
+    "source_window": "",
+    "last_content_update": 1726740460253,
+    "read_only": false,
+    "read_only_alternatives": []
+}
