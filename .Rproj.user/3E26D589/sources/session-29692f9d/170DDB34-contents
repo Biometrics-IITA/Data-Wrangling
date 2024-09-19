@@ -104,7 +104,7 @@ The principles of tidy data offer a standardized method for organizing data valu
 
 Various functions can be used in the tidyr package, functions such as *pivoting (longer and wider), rectangling, nesting, splitting, replace and drop na* etc.
 
-# [**Examples**]{style="color: #2C6D26;"}
+### **Examples**
 
 ## [Data Frame]{style="color: #002D62;"}
 
@@ -489,7 +489,7 @@ Below is the basic R syntax needed to transform data from a wide format to a lon
 -   `names_to`: a character specifying the name of the selected columns to pivot
 -   `values_to`: a character specifying the name of the cell values in the pivoted columns.
 
-## [**Example**]{style="color: #002D62;"}
+### **Example**
 
 To illustrate how this function works, let’s import the Australia Soybean 1970 dataset.
 
@@ -535,7 +535,7 @@ The function `pivot_wider()` is the opposite of the `pivot_longer()` function. I
 -   `names_from`: the name of the output column
 -   `values_from`: the name of the column to get the cell values from
 
-## [**Example**]{style="color: #002D62;"}
+### **Example**
 
 To transform the dataset into a wide format, we use the function `pivot_wider()`
 
@@ -583,7 +583,9 @@ There are four common mutating joins: `left_join`, `right_join`, `inner_join`, a
 
 A left join in R is a kind of database join that joins two data frames together by their columns using a shared key. Only the matching rows from the right data frame are included in the result of a left join, which contains all of the rows from the left data frame. NA values are entered for each column in the corresponding data frame if there is no match.\
 \
-**Example** To demonstrate how these mutating joins work, let’s import the pair of data frames needed.
+**Example**
+
+To demonstrate how these mutating joins work, let’s import the pair of data frames needed.
 
 ```{r }
 #|echo=TRUE

@@ -151,10 +151,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul class="collapse">
   <li><a href="#tibbles" id="toc-tibbles" class="nav-link" data-scroll-target="#tibbles"><span style="color: #002D62;">Tibbles</span></a></li>
   <li><a href="#data-import" id="toc-data-import" class="nav-link" data-scroll-target="#data-import"><span style="color: #002D62;">Data Import</span></a></li>
-  <li><a href="#tidy-data" id="toc-tidy-data" class="nav-link" data-scroll-target="#tidy-data"><span style="color: #002D62;">Tidy Data</span></a></li>
-  </ul></li>
-  <li><a href="#examples" id="toc-examples" class="nav-link" data-scroll-target="#examples"><span style="color: #2C6D26;"><strong>Examples</strong></span></a>
+  <li><a href="#tidy-data" id="toc-tidy-data" class="nav-link" data-scroll-target="#tidy-data"><span style="color: #002D62;">Tidy Data</span></a>
   <ul class="collapse">
+  <li><a href="#examples" id="toc-examples" class="nav-link" data-scroll-target="#examples"><strong>Examples</strong></a></li>
+  </ul></li>
   <li><a href="#data-frame" id="toc-data-frame" class="nav-link" data-scroll-target="#data-frame"><span style="color: #002D62;">Data Frame</span></a></li>
   <li><a href="#the-tidyverse-package" id="toc-the-tidyverse-package" class="nav-link" data-scroll-target="#the-tidyverse-package"><span style="color: #002D62;">The tidyverse package</span></a></li>
   <li><a href="#data-import-1" id="toc-data-import-1" class="nav-link" data-scroll-target="#data-import-1"><span style="color: #002D62;"><strong>Data Import</strong></span></a></li>
@@ -173,10 +173,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </ul></li>
   <li><a href="#pivoting" id="toc-pivoting" class="nav-link" data-scroll-target="#pivoting"><span style="color: #2C6D26;"><strong>Pivoting</strong></span></a>
   <ul class="collapse">
-  <li><a href="#pivot-longer" id="toc-pivot-longer" class="nav-link" data-scroll-target="#pivot-longer"><span style="color:#002D62;"><strong>Pivot Longer</strong></span></a></li>
-  <li><a href="#example" id="toc-example" class="nav-link" data-scroll-target="#example"><span style="color: #002D62;"><strong>Example</strong></span></a></li>
-  <li><a href="#pivot-wider" id="toc-pivot-wider" class="nav-link" data-scroll-target="#pivot-wider"><span style="color: #2C6D26;"><strong>Pivot Wider</strong></span></a></li>
-  <li><a href="#example-1" id="toc-example-1" class="nav-link" data-scroll-target="#example-1"><span style="color: #002D62;"><strong>Example</strong></span></a></li>
+  <li><a href="#pivot-longer" id="toc-pivot-longer" class="nav-link" data-scroll-target="#pivot-longer"><span style="color:#002D62;"><strong>Pivot Longer</strong></span></a>
+  <ul class="collapse">
+  <li><a href="#example" id="toc-example" class="nav-link" data-scroll-target="#example"><strong>Example</strong></a></li>
+  </ul></li>
+  <li><a href="#pivot-wider" id="toc-pivot-wider" class="nav-link" data-scroll-target="#pivot-wider"><span style="color: #2C6D26;"><strong>Pivot Wider</strong></span></a>
+  <ul class="collapse">
+  <li><a href="#example-1" id="toc-example-1" class="nav-link" data-scroll-target="#example-1"><strong>Example</strong></a></li>
+  </ul></li>
   </ul></li>
   <li><a href="#combining-tables" id="toc-combining-tables" class="nav-link" data-scroll-target="#combining-tables"><span style="color: #2C6D26;"><strong>Combining Tables</strong></span></a>
   <ul class="collapse">
@@ -378,10 +382,10 @@ dbl (8): amylase, diapow, hddate, lodging, malt, height, protein, yield
 </ul>
 <p>The principles of tidy data offer a standardized method for organizing data values within a dataset. The tidy data standard is designed to ease the initial exploration and analysis of data and to streamline the creation of data analysis tools that integrate seamlessly.</p>
 <p>Various functions can be used in the tidyr package, functions such as <em>pivoting (longer and wider), rectangling, nesting, splitting, replace and drop na</em> etc.</p>
+<section id="examples" class="level3">
+<h3 class="anchored" data-anchor-id="examples"><strong>Examples</strong></h3>
 </section>
 </section>
-<section id="examples" class="level1">
-<h1><span style="color: #2C6D26;"><strong>Examples</strong></span></h1>
 <section id="data-frame" class="level2">
 <h2 class="anchored" data-anchor-id="data-frame"><span style="color: #002D62;">Data Frame</span></h2>
 <p><strong>Let’s create a data frame</strong></p>
@@ -1353,9 +1357,8 @@ dbl (7): year, yield, height, lodging, size, protein, oil
 <li><code>names_to</code>: a character specifying the name of the selected columns to pivot</li>
 <li><code>values_to</code>: a character specifying the name of the cell values in the pivoted columns.</li>
 </ul>
-</section>
-<section id="example" class="level2">
-<h2 class="anchored" data-anchor-id="example"><span style="color: #002D62;"><strong>Example</strong></span></h2>
+<section id="example" class="level3">
+<h3 class="anchored" data-anchor-id="example"><strong>Example</strong></h3>
 <p>To illustrate how this function works, let’s import the Australia Soybean 1970 dataset.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb162"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb162-1"><a href="#cb162-1" aria-hidden="true" tabindex="-1"></a><span class="co">#|echo=TRUE</span></span>
@@ -1423,6 +1426,7 @@ dbl (4): year, yield, height, lodging
 </div>
 </div>
 </section>
+</section>
 <section id="pivot-wider" class="level2">
 <h2 class="anchored" data-anchor-id="pivot-wider"><span style="color: #2C6D26;"><strong>Pivot Wider</strong></span></h2>
 <p>The function <code>pivot_wider()</code> is the opposite of the <code>pivot_longer()</code> function. It transforms the dataset from long format to wider. Below is the basic R syntax needed to transform data from a wide format to a long format:</p>
@@ -1435,9 +1439,8 @@ dbl (4): year, yield, height, lodging
 <li><code>names_from</code>: the name of the output column</li>
 <li><code>values_from</code>: the name of the column to get the cell values from</li>
 </ul>
-</section>
-<section id="example-1" class="level2">
-<h2 class="anchored" data-anchor-id="example-1"><span style="color: #002D62;"><strong>Example</strong></span></h2>
+<section id="example-1" class="level3">
+<h3 class="anchored" data-anchor-id="example-1"><strong>Example</strong></h3>
 <p>To transform the dataset into a wide format, we use the function <code>pivot_wider()</code></p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb170"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb170-1"><a href="#cb170-1" aria-hidden="true" tabindex="-1"></a><span class="co">#|echo=TRUE</span></span>
@@ -1504,6 +1507,7 @@ dbl (2): year, values
 </div>
 </section>
 </section>
+</section>
 <section id="combining-tables" class="level1">
 <h1><span style="color: #2C6D26;"><strong>Combining Tables</strong></span></h1>
 <p>So far we have seen how tidy data can be reshaped. However, there are occasions when dataset comes from different data sources and we need to combine them together before we proceed further to analysis or result presentation. The <code>dplyr</code> in R <strong>tidyverse</strong> package offers different mutating join functions to combine datasets together. A mutating join function allows you to combine variables from two tables by matching observations by key variable(s), then copy variables from one table to another.</p>
@@ -1516,7 +1520,8 @@ dbl (2): year, values
 <p><img src="images/left2.jpg" class="img-fluid" style="width:30.0%"></p>
 <p>A left join in R is a kind of database join that joins two data frames together by their columns using a shared key. Only the matching rows from the right data frame are included in the result of a left join, which contains all of the rows from the left data frame. NA values are entered for each column in the corresponding data frame if there is no match.<br>
 <br>
-<strong>Example</strong> To demonstrate how these mutating joins work, let’s import the pair of data frames needed.</p>
+<strong>Example</strong></p>
+<p>To demonstrate how these mutating joins work, let’s import the pair of data frames needed.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb178"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb178-1"><a href="#cb178-1" aria-hidden="true" tabindex="-1"></a><span class="co">#|echo=TRUE</span></span>
 <span id="cb178-2"><a href="#cb178-2" aria-hidden="true" tabindex="-1"></a></span>
