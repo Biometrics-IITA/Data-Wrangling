@@ -1,0 +1,15 @@
+"0","#| eval = FALSE"
+"2","Warning message:
+"
+"2","In value[[3L]](cond) :"
+"2"," Failed to parse chunk options in body:
+Error in parse(text = code, keep.source = FALSE): <text>:1:21: unexpected symbol
+1: alist( eval = FALSE attr.source
+                        ^
+
+"
+"0","#| attr.source='.numberLines"
+"0","pivot_longer(data, cols, names_to = ""xxx"", values_to = ""yyy"") #<<}"
+"2","Error in UseMethod(""pivot_longer"") : 
+  no applicable method for 'pivot_longer' applied to an object of class ""function""
+"

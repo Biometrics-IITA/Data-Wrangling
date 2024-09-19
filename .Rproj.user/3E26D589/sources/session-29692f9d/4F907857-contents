@@ -1,0 +1,14 @@
+library(readxl)
+library(ggcorrplot)
+library(tidyverse)
+dat <- read_excel("predictions for traits correlations.xlsx")
+
+dd <- dat |> 
+  pivot_wider(names_from = Trait, values_from = Means) |> 
+  select(-GENO) |> 
+  na.omit() 
+corr <- cor(dd)
+
+pmat <- cor_pmat(dd)
+ggcorrplot(corr, type = "lower", insig = "pch", p.mat = pmat,
+           lab = TRUE, lab_size=3,colors=c("blue","white","green"))

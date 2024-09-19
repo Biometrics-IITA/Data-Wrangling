@@ -1,0 +1,185 @@
+
+#####Method 1: Correlation matrix using ggcorrplot##########
+############################################################
+############################################################
+library(readxl)
+library(ggcorrplot)
+library(tidyverse)
+dat <- read_excel("predictions for traits correlations.xlsx")
+
+dd <- dat |> 
+  pivot_wider(names_from = Trait, values_from = Means) |> 
+  select(-GENO) |> 
+  na.omit() 
+corr <- cor(dd)
+
+pmat <- cor_pmat(dd)
+ggcorrplot(corr, type = "lower", insig = "pch", p.mat = pmat,
+           lab = TRUE, show.legend = FALSE, 
+           lab_size=3,colors=c("blue","white","green"))
+
+
+
+#####Method 2: Using corrplot#############
+###########################################
+###########################################
+
+# Load necessary libraries
+library(tidyverse)
+library(readxl)
+library(corrplot)
+library(ggcorrplot)
+
+# Load data
+dat <-  read_excel("predictions for traits correlations.xlsx")
+
+#Explore the data
+
+head(dat)
+
+#Summary of data 
+summary(dat)
+
+summary(dat$Trait)
+
+
+str(dat)
+
+
+#check for missing data
+sum(is.na(dat))
+
+colSums(is.na(dat))
+
+
+#Pivot wider  
+dat_wider <- pivot_wider(dat, names_from = "Trait", values_from = "Means") 
+
+table(dat_wider$GENO)
+
+sum(is.na(dat_wider))
+
+# Replace NA values with the mean of each column
+dat1 <- data.frame(lapply(dat_wider, function(x) {
+  if(is.numeric(x)) {
+    x[is.na(x)] <- mean(x, na.rm = TRUE)
+  }
+  return(x)
+}))
+
+
+#check if there is still a missing value
+sum(is.na(dat1))
+
+
+# View the updated data
+print(dat1) 
+cor_matrix <- cor(dat1 %>% 
+                    select(BRNHT:TCHART))
+
+#Correlation Plot
+# Define color scale
+col <- colorRampPalette(c("purple", "white", "green"))(200)
+
+# Plot the correlation matrix
+corrplot(cor_matrix, method = "color", type = "upper", 
+         tl.col = "black", tl.srt = 45, 
+         addCoef.col = "black", 
+         col = col,
+         cl.lim = c(-1, 1), # Set color limits to cover the full range
+         diag = FALSE)
+
+
+
+corrplot(cor_matrix, method = "color", type = "upper", 
+         tl.col = "black", tl.srt = 45, 
+         addCoef.col = "black", # Add correlation coefficients
+         col = colorRampPalette(c("purple", "white", "green"))(200), 
+         diag = FALSE) # Turn off the diagonal
+
+#####Method 3: Using corrplot#############
+###########################################
+###########################################
+
+dat1 |>
+  select(BRNHT:TCHART) |>
+  cor() |>
+  corrplot(method = "color",
+           type = "lower",
+           tl.srt = 45,
+           addCoef.col="black",
+           tl.col = "black",
+           col = colorRampPalette(c("purple", "white", "green"))(150), 
+           diag = FALSE,
+           sig.level = 0.05,
+           insig = "label_sig", pch = "+",
+           legend.pos = "right",
+           pch.cex = 1.7,
+           addCoefasPercent = FALSE)
+           
+
+#####Method 4: Using Metan #############
+###########################################
+###########################################
+
+
+library(metan)
+
+plot1 <- dat1 |> 
+  select(BRNHT:TCHART) |>  
+  #na.omit() |>  
+  corr_coef()
+
+plot(plot1, 
+     col.low = "purple",
+     col.mid = "white",
+     col.high = "green", 
+     legend.position = "right",
+     size.text.cor = 3,
+     stars = FALSE
+     )  
+
+ggsave("Figure 6.svg", dpi=500, bg="white")
+
+
+###Method 5: Using rstatix  Package #####################
+##############################################
+###############################################
+
+library(tidyverse)
+library(rstatix)
+library(ggpubr)
+
+
+dat1 |>
+  select(BRNHT:TCHART) %>% 
+  cor_mat() %>%
+  cor_plot()
+
+# Reorder by correlation coefficient
+# pull lower triangle and visualize
+cor.lower.tri <- dat1 |>
+  select(BRNHT:TCHART) %>% 
+  cor_mat()  %>%
+  cor_reorder() %>%
+  pull_upper_triangle()
+
+
+cor.lower.tri %>%
+  cor_plot(method = "color")
+
+my.palette <- get_palette(c("purple", "white", "green"), 200)
+
+cor.lower.tri %>%
+  cor_plot(name="Correlation Matrix",
+           palette = my.palette,
+           method = "color",
+           round(cor.lower.tri, 0.5),
+           par(cex = 0.5),
+           name="Correlation",
+           label =TRUE,
+           font.label = list(size = 0.8, color = "black"),
+           
+           
+           )
+

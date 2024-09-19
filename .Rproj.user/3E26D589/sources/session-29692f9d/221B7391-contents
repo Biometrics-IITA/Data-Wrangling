@@ -1,9 +1,47 @@
 ---
-title: "Data Wrangling"
+title: "Untitled"
+format: html
+editor: visual
+---
+
+---
+title: "<p style=\"color:black,text-align:center\"> Data Wrangling</p>"
 author: 
   - name: <font color=#ff6600><b>Biometrics Unit</b></font> 
     affiliation: <font color=#ff6600><b>International Institute of Tropical Agriculture (IITA)</b></font>
+format:
+  html:
+    html-math-method: mathjax
+    css: "style.css"
+    toc: true
+    toc-location: right
+    toc-title: Contents
+    toc_float:
+    collapsed: True
+    smooth_scroll: true
+    code_folding: show
+    number_sections: false
+    theme: readable
+    highlight: monochrome
+    fig_width: 5
+    fig_height: 5
+    fig_caption: true
+    df_print: paged
+    xaringan::moon_reader: null
+    lib_dir: libs
+    nature:
+      highlightStyle: github
 ---
+
+```{r setup, include=FALSE}
+library(knitr)
+library(rmdformats)
+
+## Global options
+#options(max.print="80")
+opts_chunk$set(tidy=TRUE, message=FALSE, warning=FALSE)
+#opts_knit$set(width=80)
+```
 
 # [**Introduction**]{style="color: #2C6D26;"}
 
@@ -38,19 +76,28 @@ Tibbles are a key feature of the tidyverse, distinguishing it from most other R 
 **Example**
 
 ```{r}
-library(tidyverse) #load tidyverse package 
-library(agridat)  #load agridat package 
-dat <- (australia.soybean) 
-dat <-  as_tibble(dat)  #convert dataframe to tibble dat 
+library(tidyverse) #load tidyverse package
+library(agridat)  #load agridat package
+dat <- (australia.soybean)
+dat <-  as_tibble(dat)  #convert dataframe to tibble
+dat 
 ```
+
+<br><br>
 
 You can create tibbles from raw data using `tibble()` as shown below
 
 **Example**
 
 ```{r}
-tibble (   x = 1:10,   y = rep(1:5,2),   z = x + y )
+tibble (
+  x = 1:10,
+  y = rep(1:5,2),
+  z = x + y
+)
 ```
+
+<br><br>
 
 **What are the common differences between a tibble and a dataframe**
 
@@ -59,10 +106,23 @@ A tibble is considered a neater format of a data frame and its often used in tid
 **Example**
 
 ```{r}
-set.seed(234) 
-df <- tibble(   x = runif(5),   y = rnorm(5) )  # Extract by name df$x  
-df[["x"]]  # Extract by position df[[1]] 
+set.seed(234)
+df <- tibble(
+  x = runif(5),
+  y = rnorm(5)
+)
+
+# Extract by name
+df$x
+
+df[["x"]]
+
+# Extract by position
+df[[1]]
+
 ```
+
+<br><br>
 
 ## [Data Import]{style="color: #002D62;"}
 
@@ -71,12 +131,19 @@ df[["x"]]  # Extract by position df[[1]]
 Data import can be done with the `readr` package which is a core `tidyverse` package. This is used for reading data stored in text file spreadsheets into R. Some readr's function are used in turning flat files into dataframe. You can load readr using the code `library(readr)`, this gives you access to functions such as: `read_csv()` for reading comma delimited files, `read_csv2()` for semicolon separated files, `read_table` for white space separated values etc.
 
 ```{r}
-#install readr package 
-install.packages("readr")  # load the package 
-library(readr)  #read the csv file into a tibble  
-data <- read_csv("steptoe.morex.pheno.csv") 
+#install readr package
+install.packages("readr")
+
+# load the package
+library(readr)
+
+#read the csv file into a tibble
+
+data <- read_csv("steptoe.morex.pheno.csv")
 data
 ```
+
+<br><br>
 
 **Importing an Excel Version (XLSL)**
 
@@ -85,12 +152,19 @@ The readxl library can also be assessed from the readr package and it is used to
 **Example**
 
 ```{r}
-#install the readxl package 
-#install.packages("readxl")   #load the readxl package 
-library(readxl)  #Read the Excel file into a tibble 
-dat <-  read_excel("Sugar cane.xlsx", sheet = "Sugar cane") 
-dat 
+#install the readxl package
+#install.packages("readxl") 
+
+#load the readxl package
+library(readxl)
+
+#Read the Excel file into a tibble
+dat <-  read_excel("Sugar cane.xlsx", sheet = "Sugar cane")
+dat
+
 ```
+
+<br><br>
 
 ## [Tidy Data]{style="color: #002D62;"}
 
@@ -111,116 +185,155 @@ Various functions can be used in the tidyr package, functions such as *pivoting 
 **Let's create a data frame**
 
 ```{r}
-trial01 <- data.frame(   variety = c("G01-US234", "G05-BT456", "Ind01","G11-DR234", "Check"),    yield = c(6323.3, 2515.2, 5611, 7729, 7843.25),   height = c(123.30, 95.2, 113, 89.45, 145.67)   )
+trial01 <- data.frame(
+  variety = c("G01-US234", "G05-BT456", "Ind01","G11-DR234", "Check"), 
+  yield = c(6323.3, 2515.2, 5611, 7729, 7843.25),
+  height = c(123.30, 95.2, 113, 89.45, 145.67)
+  )
 ```
 
 **Let's display the data frame**
 
 ```{r}
 trial01  ## display the object in Q2
-View(trial01) ## display the object in Q1 
-#trial01[R,C] 
+View(trial01) ## display the object in Q1
+
+#trial01[R,C]
 trial01[1:5,]
 ```
+
+<br><br>
 
 **We can extract the first three rows:**
 
 ```{r}
-# object[1:nrows, 1:ncolumns] 
-trial01[1:5, 1:3] 
+# object[1:nrows, 1:ncolumns]
+trial01[1:5, 1:3]
 trial01[1:3, ] # the three first rows and all columns
 ```
 
 ```{r}
-# We can extract the first two columns 
-trial01[, 1:2] 
+# We can extract the first two columns
+trial01[, 1:2]
+
 ```
 
 ```{r}
-# We can extract "from 3rd to 5th row" with "2nd and 3rd column" 
-trial01[3:5, 2:3]  
+# We can extract "from 3rd to 5th row" with "2nd and 3rd column"
+trial01[3:5, 2:3]
+
 trial01[,c(1,3)]
 ```
 
 ```{r}
 # We can list the column names using any of this methods
-names(trial01) 
+names(trial01)
+
 colnames(trial01)
 ```
 
 ```{r}
-# We can extract specific column from a data frame using column name 
-trial01$  yield1 <- trial01$yield  
-trial01$yield  
+# We can extract specific column from a data frame using column name trial01$
+
+yield1 <- trial01$yield
+
+trial01$yield
+
+
 ```
 
 ```{r}
-# trial01$Yield. R is case sensitive, yield is different from Yield  # We can find the mean of the extracted column using any of the codes below  
-mean(trial01$yield) 
-  
-mean(trial01$yield) 
+# trial01$Yield. R is case sensitive, yield is different from Yield
+
+# We can find the mean of the extracted column using any of the codes below
+
+mean(trial01$yield)
+mean(yield1)
+
+mean(trial01$yield)
+
 ```
 
 ```{r}
-# We can add a column vector using a new column name 
-trial01$flowering <- c(87, 101, 88, 120, 90) 
-trial01$flowering <- c(87,101,88,120,90) 
-trial01 
+# We can add a column vector using a new column name
+trial01$flowering <- c(87, 101, 88, 120, 90)
+trial01$flowering <- c(87,101,88,120,90)
+trial01
 
-flowering2 <- c(87,101,88,120,90)  
-trial01$flowerin2 <- flowering2  
+flowering2 <- c(87,101,88,120,90)
+
+trial01$flowerin2 <- flowering2
+
 trial01
 ```
+
+<br><br>
 
 ## [The tidyverse package]{style="color: #002D62;"}
 
 ```{r}
-library(tidyverse) 
-trial01  # Let's look at the structure of trial01  
+
+library(tidyverse)
+trial01
+
+# Let's look at the structure of trial01
+
 str(trial01) ## structure of trial01: what's trial01?
 ```
 
 ```{r}
-# we can convert trial01 to a tibble and save the new created object into trial01.tibble 
-trial01.new <- as_tibble(trial01)  
-trial01.new # dbl(double) and int(integer) are numeric
+# we can convert trial01 to a tibble and save the new created object into trial01.tibble
+trial01.new <- as_tibble(trial01) 
+trial01.new
+# dbl(double) and int(integer) are numeric
 ```
 
 ## [**Data Import**]{style="color: #002D62;"}
 
 ```{r}
-# Read csv file: supply the path to a file and you get the data into R  
-library(readr) 
-mydata <- read_csv("C:/Users/DOjekere/CGIAR/Fowobaje, Kayode Rapheal (IITA) - Training Materials/2024/R/RMD Training/Example-02.csv") 
-mydata   # If a project/working directory is created and we are working within the project,  
+# Read csv file: supply the path to a file and you get the data into R
+
+library(readr)
+mydata <- read_csv("C:/Users/DOjekere/CGIAR/Fowobaje, Kayode Rapheal (IITA) - Training Materials/2024/R/RMD Training/Example-02.csv")
+mydata
+
+
+# If a project/working directory is created and we are working within the project,
+
 mydata1 <- read_csv("Example-02.csv") # Tab keyboard
 ```
 
 ```{r}
-## Read xlsx file 
-library(readxl) 
-iwu <- read_excel("C:/Users/DOjekere/CGIAR/Fowobaje, Kayode Rapheal (IITA) - Training Materials/2024/R/RMD Training/Example-03.xlsx", sheet = "whitecorn")  
-## Read Excel file: 
+
+## Read xlsx file
+library(readxl)
+iwu <- read_excel("C:/Users/DOjekere/CGIAR/Fowobaje, Kayode Rapheal (IITA) - Training Materials/2024/R/RMD Training/Example-03.xlsx", sheet = "whitecorn")
+
+## Read Excel file:
 mydata2 <- read_excel("Example-03.xlsx", sheet = "whitecorn")
-View(mydata2) 
+View(mydata2)
 mydata2
 ```
 
 ## [Data Transformation]{style="color: #002D62;"}
 
 ```{r}
-library(tidyverse)  
-example02 <- read_csv("Example-02.csv") 
-example02 
+library(tidyverse)
 
-names(example02) 
-str(example02) ## really don't need when you have tibble  # I want to display the number of years
-head(example02$year) 
-unique(example02$year) 
+example02 <- read_csv("Example-02.csv")
+example02
+names(example02)
+str(example02) ## really don't need when you have tibble
+
+# I want to display the number of years
+head(example02$year)
+unique(example02$year)
 unique(example02$loc) # having the number of locations 
 ```
 
-### **The pipe \|\>**
+<br><br>
+
+**The pipe \|\>**
 
 Pipes are a powerful tool for clearly expressing a sequence of multiple operations. Object \|\> (object is usually a tibble, a data) Function(argument1, argument2, ...)
 
@@ -229,43 +342,50 @@ Pipes are a powerful tool for clearly expressing a sequence of multiple operatio
 We can filter the data for 1970
 
 ```{r}
-example02.70 <- example02 |>    
-  filter(year == 1970)
 
+example02.70 <- example02 |> 
+  filter(year == 1970)
 example02.70
 ```
 
 Filtering using the pipe is equivalent to below but not nice
 
 ```{r}
-example02.70.not.nice <- example02[example02$year==1970,] 
+example02.70.not.nice <- example02[example02$year==1970,]
 
-example02.70.not.nice 
+example02.70.not.nice
+
 ```
 
 We can filter the data for one location :
 
 ```{r}
-example02.Lawes <- example02 |>   
-  filter(loc == "Lawes") 
+example02.Lawes <- example02 |> 
+  filter(loc == "Lawes")
 
-example02.Lawes 
+example02.Lawes
+
 ```
 
 We can filter the data with multiple criteria (several arguments)
 
 ```{r}
-example02.Lawes3.2 <- example02 |>    filter(yield > 3.2, loc == "Lawes") 
+example02.Lawes3.2 <- example02 |> 
+  filter(yield > 3.2, loc == "Lawes")
 
-example02.Lawes3.2 <- example02 |>    filter(yield >3.2, loc == "Brookstead" | loc == "Lawes")
+example02.Lawes3.2 <- example02 |> 
+  filter(yield >3.2, loc == "Brookstead" | loc == "Lawes")
 
-example02.Lawes3.2 
+example02.Lawes3.2
+
 ```
 
 What does the following command do?
 
 ```{r}
-example02 |>    filter(gen == "G01" | gen == "G02") 
+example02 |> 
+  filter(gen == "G01" | gen == "G02")
+
 ```
 
 ### **Arrange**
@@ -273,23 +393,30 @@ example02 |>    filter(gen == "G01" | gen == "G02")
 We can arrange example02 by yield in ascending order
 
 ```{r}
-library(tidyverse) 
-library(readxl) 
-example02 <- read_csv("Example-02.csv")  
-example02 |>    arrange(yield)
+library(tidyverse)
+library(readxl)
+example02 <- read_csv("Example-02.csv")
+
+example02 |> 
+  arrange(yield)
 ```
 
 We can arrange example02 by yield in descending order
 
 ```{r}
-example02 |>    arrange(desc(yield))
+example02 |> 
+  arrange(desc(yield))
 ```
 
 We can arrange example02 by year, loc, gen
 
 ```{r}
-example02 |>    arrange(year, loc, gen)  
-example02 |>    arrange(desc(year), loc, gen) 
+example02 |> 
+  arrange(year, loc, gen)
+
+example02 |> 
+  arrange(desc(year), loc, gen)
+
 ```
 
 ### **Select**
@@ -297,8 +424,8 @@ example02 |>    arrange(desc(year), loc, gen)
 When working with many variables, it can be a good practice to narrow the dataset and consider only few variables for analysis. Let's only consider the location, year, genotype, yield, and height
 
 ```{r}
-example02.short <- example02 |>   
-  select(loc, year, gen, yield, height)  
+example02.short <- example02 |> 
+  select(loc, year, gen, yield, height)
 
 example02.short
 ```
@@ -306,46 +433,59 @@ example02.short
 If we are interested in moving a particular variable to the first column in the dataframe, select() and everything() can do that. We can also move more than one variable
 
 ```{r}
-example02 |>    select(year, everything())  
-example02 |>    select(year, loc, gen, everything())
+example02 |> 
+  select(year, everything())
+
+example02 |> 
+  select(year, loc, gen, everything())
 ```
 
 **NOTE:** Select refers to columns: select (yield, loc, gen) -- choose the columns arrange refers to rows: arrange(loc, desc(yield)) -- sort
 
 ```{r}
-example02 |>    select (yield, loc, gen) 
+example02 |> 
+  select (yield, loc, gen)
+
 ```
 
 This code will not work because there is no variable named "desc(yield)"
 
 ```{r}
-#example02 |>         #  select (loc, gen, desc(yield))
+#example02 |>        
+#  select (loc, gen, desc(yield))
 ```
 
 But what we want is:
 
 ```         
-1. select the three variables, AND 2. sort the yield in desc order
+1. select the three variables, AND
+2. sort the yield in desc order
 ```
 
 This can be done with:
 
 ```{r}
-new <- example02 |>    select (loc, gen, yield) |>    arrange(desc(yield))
+new <- example02 |> 
+  select (loc, gen, yield) |> 
+  arrange(desc(yield))
 ```
+
+<br><br>
 
 ### **Add New Variable**
 
 We can add new columns that are functions of existing columns with `mutate()` which always adds new columns at the end of the data new column
 
 ```{r}
-new1 <- example02.short |>    mutate(yield_kg_ha = yield * 1000)
+new1 <- example02.short |> 
+  mutate(yield_kg_ha = yield * 1000)
 ```
 
 **Replace an existing column**
 
 ```{r}
-new2 <- example02.short |>    mutate(yield = yield * 1000)
+new2 <- example02.short |> 
+  mutate(yield = yield * 1000)
 ```
 
 ### **Summarize**
@@ -353,16 +493,20 @@ new2 <- example02.short |>    mutate(yield = yield * 1000)
 We can be interested having the mean of yield
 
 ```{r}
-mean(example02$yield, na.rm = TRUE) 
-a <- c(2,3,4) 
-a 
-mean(a) 
-mean(a, na.rm = TRUE)  
-b <- c(2,3,4,NA) 
-b 
-mean(b) 
-mean(b, na.rm = TRUE)  
-summary(example02) # summary of the dataframe 
+mean(example02$yield, na.rm = TRUE)
+
+a <- c(2,3,4)
+a
+mean(a)
+mean(a, na.rm = TRUE)
+
+b <- c(2,3,4,NA)
+b
+mean(b)
+mean(b, na.rm = TRUE)
+
+summary(example02) # summary of the dataframe
+
 ```
 
 **But we prefer using summarize from tidyverse**
@@ -370,27 +514,38 @@ summary(example02) # summary of the dataframe
 `Summarize()` collapses a data frame to a single or few row(s)
 
 ```{r}
-example02 |>    summarize(yield_mean = mean(yield, na.rm=TRUE))
+example02 |> 
+  summarize(yield_mean = mean(yield, na.rm=TRUE))
 ```
 
 **Summarize by group**
 
 ```{r}
-unique(example02$loc) 
+unique(example02$loc)
 
-example02 |>   group_by(loc) |>   summarise(yield_loc = mean(yield, na.rm = TRUE))
+example02 |>
+  group_by(loc) |>
+  summarise(yield_loc = mean(yield, na.rm = TRUE))
 
-example02 |>   group_by(loc, year) |>   summarise(yield_loc = mean(yield, na.rm = TRUE)) 
+example02 |>
+  group_by(loc, year) |>
+  summarise(yield_loc = mean(yield, na.rm = TRUE))
 
-example02 |>   group_by(gen) |>   summarise(yield = mean(yield, na.rm = TRUE)) |>    arrange(desc(yield))  
+example02 |>
+  group_by(gen) |>
+  summarise(yield = mean(yield, na.rm = TRUE)) |> 
+  arrange(desc(yield))
 
-example02 |>   group_by(gen, loc) |>   summarise(yield = mean(yield, na.rm = TRUE)) |>    arrange(desc(yield))
+example02 |>
+  group_by(gen, loc) |>
+  summarise(yield = mean(yield, na.rm = TRUE)) |> 
+  arrange(desc(yield))
 ```
 
 ### **Missing values**
 
 ```{r}
-missing_dat <- read_csv("Example-02-missing.csv") 
+missing_dat <- read_csv("Example-02-missing.csv")
 
 mean(missing_dat$yield, na.rm = TRUE)
 ```
@@ -399,28 +554,33 @@ mean(missing_dat$yield, na.rm = TRUE)
 
 ```{r}
 example02.missing <- read_csv("Example-02-missing.csv")
+missing_dat |> 
+  group_by(loc) |> 
+  summarize(Nmissing=sum(is.na(yield)))
 
-missing_dat |>    group_by(loc) |>    
-  summarize(Nmissing=sum(is.na(yield))) 
 ```
 
 Select the obs with a missing yield
 
 ```{r}
-missing_dat |>    filter(is.na(yield))
+missing_dat |> 
+  filter(is.na(yield))
 ```
 
 The total number of obs is 464
 
 ```{r}
-example02.missing |>    filter(!is.na(yield)) 
+example02.missing |> 
+  filter(!is.na(yield))
+
 ```
 
 464 obs = 461 valid + 3 missing
 
 ```{r}
-head(is.na(example02.missing$yield)) 
-sum(is.na(example02.missing$yield)) 
+head(is.na(example02.missing$yield))
+sum(is.na(example02.missing$yield))
+
 ```
 
 ### **Count**
@@ -428,7 +588,9 @@ sum(is.na(example02.missing$yield))
 Counting the number of observations
 
 ```{r}
-example02 |>   group_by(loc) |>   summarise(new4 = n())
+example02 |>
+  group_by(loc) |>
+  summarise(new4 = n())
 ```
 
 ### **Factors**
@@ -437,18 +599,23 @@ The function as.factor() convert a variable to a factor
 
 ```{r}
 example02$env <- as.factor(example02$env)
-example02$loc <- as.factor(example02$loc) 
-example02$gen <- as.factor(example02$gen) 
+example02$loc <- as.factor(example02$loc)
+example02$gen <- as.factor(example02$gen)
+
 ```
 
 This is equivalent to the code below using mutate() and the pipe \|\>
 
 ```{r}
-example02 <- example02 |>   mutate(     env=factor(env),     
-                                        loc=factor(loc),     gen=factor(gen)   ) 
+example02 <- example02 |>
+  mutate(
+    env=factor(env),
+    loc=factor(loc),
+    gen=factor(gen)
+  )
 
-
-example02 |>   mutate(across(c(env, loc, gen)))
+example02 |>
+  mutate(across(c(env, loc, gen)))
 ```
 
 To display the levels of a factor
@@ -462,6 +629,8 @@ To get the number of levels of a factor
 ```{r}
 nlevels(example02$env)
 ```
+
+<br><br>
 
 # [**Pivoting**]{style="color: #2C6D26;"}
 
@@ -479,9 +648,9 @@ A common problem is a dataset where some of the column names are not names of va
 
 Below is the basic R syntax needed to transform data from a wide format to a long format:
 
-```{r }
-#|eval = FALSE
-#pivot_longer(data, cols, names_to = "xxx", values_to = "yyy") #<<
+```{r eval = FALSE}
+
+pivot_longer(data, cols, names_to = "xxx", values_to = "yyy") #<<
 ```
 
 -   `data`: a data frame to pivot longer
@@ -493,42 +662,38 @@ Below is the basic R syntax needed to transform data from a wide format to a lon
 
 To illustrate how this function works, let’s import the Australia Soybean 1970 dataset.
 
-```{r }
-#|echo=TRUE
-#|results="tiny"
-#library(tidyverse) 
-dat <- read_csv("australia.soybean1970.csv") 
+```{r echo=TRUE, results="tiny"}
+#library(tidyverse)
+dat <- read_csv("australia.soybean1970.csv")
+
 ```
 
 We have a data frame with 7 variables (env, loc, year, gen, yield, height, and lodging) and 232 observations. The data frame is stored under an object named **dat**
 
-```{r}
-#|echo=TRUE
-#|results="tiny"
+```{r echo=TRUE, results="tiny"}
 dat
 ```
 
 As you can see, the dataset is already in wide format as seen from the previous slide. To transform the dataset into a long format, we use the function `pivot_longer`
 
-```{r }
-#|echo=TRUE
-#|tidy=FALSE
-dat_longer <- dat |>   pivot_longer(yield:lodging, names_to = "trait", values_to = "values") 
+```{r echo=TRUE, tidy=FALSE}
+dat_longer <- dat |>
+  pivot_longer(yield:lodging, names_to = "trait", values_to = "values")
+
 ```
 
-```{r}
-#|echo=TRUE
-#|results="tiny"
+```{r echo=TRUE, results="tiny"}
 dat_longer
 ```
+
+<br><br>
 
 ## [**Pivot Wider**]{style="color: #2C6D26;"}
 
 The function `pivot_wider()` is the opposite of the `pivot_longer()` function. It transforms the dataset from long format to wider. Below is the basic R syntax needed to transform data from a wide format to a long format:
 
-```{r}
-#|echo=TRUE
-#pivot_wider(data, names_from = "xxx", values_from = "yyy") #<<
+```{r eval = FALSE}
+pivot_wider(data, names_from = "xxx", values_from = "yyy") #<<
 ```
 
 -   `data`: a data frame to pivot wider
@@ -539,30 +704,26 @@ The function `pivot_wider()` is the opposite of the `pivot_longer()` function. I
 
 To transform the dataset into a wide format, we use the function `pivot_wider()`
 
-```{r}
-#|echo=TRUE
-#|results="tiny"
-library(tidyverse) 
-dat <- read_csv("Longer.csv") 
+```{r echo=TRUE, results="tiny"}
+library(tidyverse)
+dat <- read_csv("Longer.csv")
+
 ```
 
-```{r}
-#|echo=TRUE
-#|results="tiny"
+```{r echo=TRUE, results="tiny"}
 dat
 ```
 
-```{r }
-#|echo=TRUE
-#|tidy=FALSE
-dat_wider <- dat |>   pivot_wider(names_from = "trait", values_from = "values")
+```{r echo=TRUE, tidy=FALSE}
+dat_wider <- dat |>
+  pivot_wider(names_from = "trait", values_from = "values")
 ```
 
-```{r}
-#|echo=TRUE
-#|results="tiny"
+```{r echo=TRUE, results="tiny"}
 dat_wider
 ```
+
+<br><br>
 
 # [**Combining Tables**]{style="color: #2C6D26;"}
 
@@ -574,22 +735,21 @@ There are four common mutating joins: `left_join`, `right_join`, `inner_join`, a
 
 `left_join(df1, df2, by)`
 
-```{r} #join matching values from df2 to df1}
+```{r}
+#join matching values from df2 to df1 
 ```
 
-![](images/left1.jpg){width="30%"}
+<img src="images/left1.jpg" width="30%"/>
 
-![](images/left2.jpg){width="30%"}
+<img src="images/left2.jpg" width="30%"/>
 
 A left join in R is a kind of database join that joins two data frames together by their columns using a shared key. Only the matching rows from the right data frame are included in the result of a left join, which contains all of the rows from the left data frame. NA values are entered for each column in the corresponding data frame if there is no match.\
 \
 **Example** To demonstrate how these mutating joins work, let’s import the pair of data frames needed.
 
-```{r }
-#|echo=TRUE
-
-library(readxl) 
-dat1 <- read_excel("df.combine.xlsx", sheet="df1") 
+```{r echo=TRUE}
+library(readxl)
+dat1 <- read_excel("df.combine.xlsx", sheet="df1")
 dat2 <- read_excel("df.combine.xlsx", sheet="df2")
 ```
 
@@ -599,29 +759,25 @@ dat2 <- read_excel("df.combine.xlsx", sheet="df2")
 
 Display the observations in dat1
 
-```{r}
-#|echo=TRUE
-#|results="tiny"
+```{r echo=TRUE, results="tiny"}
 dat1
 ```
 
 Display the observations in dat2
 
-```{r}
-#|echo=TRUE
-#|results="tiny"
+```{r echo=TRUE, results="tiny"}
 dat2
 ```
 
-```{r}
-#|echo=TRUE
-#|results="tiny"
-# Left join 
-df_left <- left_join(dat1, dat2)   
+```{r echo=TRUE, results="tiny"}
+# Left join
+df_left <- left_join(dat1, dat2)  
 df_left
 ```
 
 -   The code performs a left join on `dat1` and `dat2`, resulting in a new data frame `df_left` that contains all rows from the left data frame (`dat1`) along with matching rows from `dat2`. Rows in `dat1` without a corresponding match in `dat2` will have `NA` in their resulting columns for data from `dat2`.
+
+    <br><br>
 
 ## [**Right Join**]{style="color: #002D62;"}
 
@@ -631,9 +787,9 @@ df_left
 #join matching values from df2 to df1 
 ```
 
-![](images/right1.jpg){width="30%"}
+<img src="images/right1.jpg" width="30%"/>
 
-![](images/right2.jpg){width="30%"}
+<img src="images/right2.jpg" width="30%"/>
 
 A right join is a type of database join that combines two data frames based on a common key, similar to a left join but with a focus on retaining all the rows from the right data frame. When performing a right join, all rows from the right data frame are included in the result, and only the matching rows from the left data frame are included. If there is no match, the corresponding columns of the left data frame will be filled with `NA` values
 
@@ -641,15 +797,15 @@ A right join is a type of database join that combines two data frames based on a
 
 Continuing with the previous data,
 
-```{r}
-#|echo=TRUE
-#|results="tiny"
-# Right join 
-df_right <- right_join(dat1, dat2)   
+```{r echo=TRUE, results="tiny"}
+# Right join
+df_right <- right_join(dat1, dat2)  
 df_right
 ```
 
 The right join operation retains all rows from the right data frame (`dat2`) and only those rows from the left data frame (`dat1`) that match based on the specified keys. If there are entries in `dat2` without corresponding matches in `dat1`, the output will show `NA` in place of those unmatched entries from `dat1`
+
+<br><br>
 
 ## [**Inner Join**]{style="color: #002D62;"}
 
@@ -659,48 +815,49 @@ The right join operation retains all rows from the right data frame (`dat2`) and
 #join values from df2 to df1 and retain only matching rows
 ```
 
-![](images/inner1.jpg){width="30%"}
+<img src="images/inner1.jpg" width="30%"/>
 
-![](images/inner2.jpg){width="30%"}
+<img src="images/inner2.jpg" width="30%"/>
 
 An inner join is a type of database join that combines two data frames (or tables) based on a common key or keys, returning only those rows where there is a match in both data frames. In other words, an inner join retrieves the intersection of the two dataset
 
 **Example**
 
-```{r}
-#|echo=TRUE
-#|results="tiny"
-# Inner join 
-df_inner <- inner_join(dat1, dat2)   
+```{r echo=TRUE, results="tiny"}
+# Inner join
+df_inner <- inner_join(dat1, dat2)  
 df_inner
 ```
 
 The resulting data frame (`df_inner`) contains only those rows where there are matching values in the `id` column of both `dat1` and `dat2`
 
+<br><br>
+
 ## [**Full join**]{style="color: #002D62;"}
 
 `full_join(df1, df2, by)`
 
-```{r} #join values from df2 to df1 and retain all rows, all values}
+```{r}
+#join values from df2 to df1 and retain all rows, all values 
 ```
 
-![](images/full1.jpg){width="30%"}
+<img src="images/full1.jpg" width="30%"/>
 
-![](images/full2.jpg){width="30%"}
+<img src="images/full2.jpg" width="30%"/>
 
 A full join (or full outer join) is a type of database join that combines the results of both left and right joins. This means that a full join returns all the rows from both data frames (or tables), regardless of whether there is a match between them. If a row in one data frame does not have a corresponding match in the other, the result will contain `NA` (or missing values) for the columns of the unmatched row from the other data frame.
 
 **Example**
 
-```{r}
-#|echo=TRUE
-#|results="tiny"
-# Full join 
-df_full <- full_join(dat1, dat2)   
+```{r echo=TRUE, results="tiny"}
+# Full join
+df_full <- full_join(dat1, dat2)  
 df_full
 ```
 
 The code `df_full <- full_join(dat1, dat2)` effectively creates a new data frame that combines data from `dat1` and `dat2`, ensuring that all records are retained, either matched or unmatched. This type of join is particularly useful in exploratory data analysis and situations where preserving all relevant data is critical for further analysis and interpretation.
+
+<br><br>
 
 # [**Creating Groups**]{style="color: #2C6D26;"}
 
@@ -724,41 +881,51 @@ Let’s demonstrate how `case_when` works with these examples using the Australi
 
 We are going to create four lodging categories such as \>=1 = 'No Lodging', \>=1.5 = 'Mild Lodging', \>=2.5 = 'Moderate Lodging', and \>=3.5 = 'Heavy Lodging'.
 
-```{r}
-#|echo=TRUE
-
-dat <- read_csv("australia.soybean1970.csv") 
+```{r echo=TRUE}
+dat <- read_csv("australia.soybean1970.csv")
 dat
 ```
 
-```{r }
-#|echo=TRUE
-#|tidy=FALSE
+<br><br>
 
-dat_new <- dat |>      		mutate(         			lodging_grp = case_when(                                       lodging >= 3.5 ~ "Heavy Lodging",                                 		  lodging >= 2.5 ~ "Moderate Lodging",                                		  	lodging >= 1.5 ~ "Mild Lodging",                                 		  lodging >= 1 ~ "No Lodging",                                 		 		       TRUE ~ "NA")  			 ) 
+```{r echo=TRUE, tidy=FALSE}
+dat_new <- dat |>
+     		mutate(
+        			lodging_grp = case_when(
+                                      lodging >= 3.5 ~ "Heavy Lodging",
+                                		  lodging >= 2.5 ~ "Moderate Lodging",
+                               		  	lodging >= 1.5 ~ "Mild Lodging",
+                                		  lodging >= 1 ~ "No Lodging",
+                                		 		       TRUE ~ "NA")
+ 			 )
+
 ```
 
-```{r}
-#|echo=TRUE
-#|results="tiny"
-dat_new 
+```{r echo=TRUE, results="tiny"}
+dat_new
+
 ```
 
 Also, we may be interested in creating a new variable from the existing categorical variable.
 
 Let’s use the new data set `dat_new` to demonstrate this process using `mutate` and `case_when` functions and introduce the `IN` operator `%in%` i.e. We create two lodging categories such that `'No Lodging'` and `'Mild Lodging'` will be `"No Lodging"`, and `'Moderate Lodging'` and `'Heavy Lodging'` will be `"Lodging"`.
 
-```{r}
-#|echo=TRUE
-#|tidy=FALSE
-dat_new <- dat_new |>           mutate(           lodging_grp2 = case_when(           lodging_grp %in% c("Heavy Lodging","Moderate Lodging")  ~ "Lodging",           lodging_grp %in% c("No Lodging", "Mild Lodging") ~ "No Lodging",                                                     TRUE   ~ "NA")   		)
+```{r echo=TRUE, tidy=FALSE}
+dat_new <- dat_new |>
+          mutate(
+          lodging_grp2 = case_when(
+          lodging_grp %in% c("Heavy Lodging","Moderate Lodging")  ~ "Lodging",
+          lodging_grp %in% c("No Lodging", "Mild Lodging") ~ "No Lodging",
+                                                    TRUE   ~ "NA")
+  		)
 ```
 
-```{r}
-#|echo=TRUE
-#|results="tiny"
-dat_new 
+```{r echo=TRUE, results="tiny"}
+dat_new
+
 ```
+
+<br><br>
 
 # [**Strings**]{style="color: #2C6D26;"}
 
@@ -776,33 +943,32 @@ Let’s use a fictitious data set called **BadData** to demonstrate how these fu
 
 The data set has seven (7) variables: Gen: A combination of location, genotype, and replication, Year: Year of trials, Traits: Measured traits (Trait1 – Trait5)
 
-```{r}
-#|echo=TRUE
-#|results="tiny"
-dat <- read_csv("BadData.csv") 
+```{r echo=TRUE, results="tiny"}
+dat <- read_csv("BadData.csv")
 dat
 ```
 
 The first task will be to create separate variables for location, genotype, and replication from the Gen variable.
 
-```{r}
-#|echo=TRUE
-#|tidy=FALSE
-dat1 <- dat |>    separate(Gen, sep = "-", into = c("LocGen", "Rep")) |>    mutate(           Location = str_sub(LocGen, 1, 2),           Gen = str_sub(LocGen, 3, 5)  	 ) |>    select(Location, Gen, Rep, Year, Trait1, Trait2, Trait3, Trait4, Trait5)
+```{r echo=TRUE, tidy=FALSE}
+dat1 <- dat |> 
+  separate(Gen, sep = "-", into = c("LocGen", "Rep")) |> 
+  mutate(
+          Location = str_sub(LocGen, 1, 2),
+          Gen = str_sub(LocGen, 3, 5)
+ 	 ) |> 
+  select(Location, Gen, Rep, Year, Trait1, Trait2, Trait3, Trait4, Trait5)
 ```
 
-```{r}
-#|echo=TRUE
-#|results="tiny"
+```{r echo=TRUE, results="tiny"}
 dat1
 ```
 
 Also, we may be interested in creating a new variable which will be a combination of at least two variables. Suppose we want to create a variable called environment `(Env)` using the data set above by combining the Location and Year together.
 
-```{r}
-#|echo=TRUE
-#|results="tiny"
-dat1 <- dat1 |>          unite(Location, Year, col = "Env", sep = "-") 
+```{r echo=TRUE, results="tiny"}
+dat1 <- dat1 |> 
+        unite(Location, Year, col = "Env", sep = "-")
 dat1
 ```
 

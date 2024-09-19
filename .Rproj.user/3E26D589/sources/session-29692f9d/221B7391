@@ -1,14 +1,14 @@
 {
-    "id": "ABC039DC",
-    "path": "C:/Users/DOjekere/CGIAR/Fowobaje, Kayode Rapheal (IITA) - Training Materials/2024/R markdown/Data Wrangling1.qmd",
+    "id": "221B7391",
+    "path": "C:/Users/DOjekere/CGIAR/Fowobaje, Kayode Rapheal (IITA) - Training Materials/2024/R markdown/Data Wrangling2.qmd",
     "project_path": null,
     "type": "quarto_markdown",
     "hash": "0",
     "contents": "",
     "dirty": false,
-    "created": 1726741814923.0,
+    "created": 1726745164569.0,
     "source_on_save": false,
-    "relative_order": 3,
+    "relative_order": 4,
     "properties": {
         "rmdVisualMode": "true",
         "rmdVisualWrapConfigured": "true",
@@ -16,14 +16,14 @@
         "Source": "Source",
         "docOutlineVisible": "1",
         "rmdVisualCollapsedChunks": "",
-        "rmdVisualModeLocation": "133:0"
+        "rmdVisualModeLocation": "2:1760"
     },
     "folds": "",
-    "lastKnownWriteTime": 1726742015,
+    "lastKnownWriteTime": 1726729777,
     "encoding": "UTF-8",
     "collab_server": "",
     "source_window": "",
-    "last_content_update": 1726742015855,
+    "last_content_update": 1726729777,
     "read_only": false,
     "read_only_alternatives": []
 }
